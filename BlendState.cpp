@@ -5,6 +5,8 @@
 
 // test
 // test2
+
+//test3
 BlendState::BlendState()
 	: m_pState(nullptr)
 {
