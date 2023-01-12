@@ -35,7 +35,12 @@
 GameUI::GameUI()
 {
 	m_pPlayerHp = new CPlayerHp;
-	m_pPlayerHpSilhouette = new CPlayerHpSilhouette();
+	m_pPlayerSp = new CPlayerSp;
+	m_pPlayerHpSilhouette = new CCreateUI("Assets/HpBarSilhouette.png", DirectX::XMFLOAT2(200.0f, -30.0f),DirectX::XMFLOAT3(55.0f, 630.0f, 0.0f));
+	m_pBarFrame = new CCreateUI("Assets/BarFrame.png", DirectX::XMFLOAT2(210.0f, -80.0f),DirectX::XMFLOAT3(50.0f, 650.0f, 0.0f));
+	m_pControllerLeft = new CControllerLeft();
+	m_pControllerRight = new CControllerRight();
+	
 }
 
 GameUI::~GameUI()
@@ -45,14 +50,23 @@ GameUI::~GameUI()
 
 void GameUI::Draw()
 {
-	m_pPlayerHp->Draw();
+	m_pBarFrame->Draw();
 	m_pPlayerHpSilhouette->Draw();
+	m_pPlayerHp->Draw();
+	m_pPlayerSp->Draw();
+
+
+	m_pControllerLeft->Draw();
+	m_pControllerRight->Draw();
 
 }
 
 void GameUI::Update()
 {
 	m_pPlayerHp->Update();
+	m_pPlayerSp->Update();
+	m_pControllerLeft->Update();
+	m_pControllerRight->Update();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
