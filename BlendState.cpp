@@ -1,12 +1,5 @@
 #include "BlendState.h"
 
-//êÖñ{ÇÃ
-//Ç§ÇÒÇ±
-//Ç®Ç‹ÇÈ
-// test
-// test2
-
-//test3
 BlendState::BlendState()
 	: m_pState(nullptr)
 {
