@@ -3,7 +3,6 @@
 #include "Model.h"
 #include "ConstantBuffer.h"
 #include "Player.h"
-#include "Effect.h"
 
 class Enemy
 {
@@ -12,7 +11,7 @@ public:
 	~Enemy();
 	void Update();
 	void Draw();
-	//void Effect();
+	void Effect();
 	void Touch();
 
 	void SetCamera(CameraBase* pCamera);
@@ -39,7 +38,6 @@ private:
 	ConstantBuffer* m_pWVP;
 	CameraBase* m_pCamera;
 	Player* m_pPlayer;
-	
 
 	// âeÇÃèÓïÒ
 	DirectX::XMFLOAT3 m_shadowPos;

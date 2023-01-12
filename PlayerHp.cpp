@@ -43,14 +43,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 CPlayerHp::CPlayerHp()
 {
-	m_fPlayerHpPos = DirectX::XMFLOAT3(70.0f, 30.0f, 0.0f);
+	m_fPlayerHpPos = DirectX::XMFLOAT3(55.0f, 630.0f, 0.0f);
 	m_fHp = 200.0f;
 	m_fDamage = 20;
 	m_nHeal = 0;
 	m_nFrame = 0;
 	m_bInv = false;
 	m_nInvTime = 120;
-	LoadTextureFromFile("Assets/HpBar.png", &m_pBar);
+	LoadTextureFromFile("Assets/HP.png", &m_pBar);
 }
 
 CPlayerHp::~CPlayerHp()
@@ -81,35 +81,35 @@ void CPlayerHp::Draw()
 	CGauge::SetWorld(mat[0]);
 	CGauge::SetView(mat[1]);
 	CGauge::SetProjection(mat[2]);
-	CGauge::SetSize(DirectX::XMFLOAT2(m_fHp, -20.0f));
+	CGauge::SetSize(DirectX::XMFLOAT2(m_fHp, -30.0f));
 	CGauge::SetTexture(m_pBar);
 	CGauge::Draw();
 }
 
 void CPlayerHp::Update()
 {
-	// 回復関連（不完全）
-	m_nHeal++;
-	if (m_fHp < 200)
-	{
-		if (m_nHeal > 300)
-		{
-			m_fHp += 10;
-			CGauge::Draw();
-			m_nHeal = 0;
-		}
-	}
-	else
-	{
-		m_nHeal = 0;
-	}
+	//// 回復関連（不完全）
+	//m_nHeal++;
+	//if (m_fHp < 200)
+	//{
+	//	if (m_nHeal > 300)
+	//	{
+	//		m_fHp += 10;
+	//		CGauge::Draw();
+	//		m_nHeal = 0;
+	//	}
+	//}
+	//else
+	//{
+	//	m_nHeal = 0;
+	//}
 
 
 	// 無敵時間関連
 	if (m_bInv == true)
 		m_nFrame++;
-
-	if (m_nFrame > 120)
+	
+	if (m_nFrame > 120)		
 	{
 		m_bInv = false;
 		m_nFrame = 0;
@@ -136,7 +136,7 @@ void CPlayerHp::Update()
 //////////////////////////////////////////////////////////////////////////////////////
 void CPlayerHp::PlayerDamage()
 {
-	if (!m_bInv == true)
+	if(!m_bInv == true)
 	{
 		m_fHp -= m_fDamage;
 		CGauge::SetSize(DirectX::XMFLOAT2(m_fHp, -20.0f));

@@ -4,10 +4,9 @@
 #include <DirectXTex/Texture.h>
 #include "Sprite.h"
 
-
 DirectX::XMFLOAT4X4 mat[3];
 Enemy::Enemy(static Model* ModelList)
-	: m_pos(0.0f, 0.0f, 0.0f)
+	: m_pos(4.0f, 0.5f, 1.0f)
 	, PlayerPos(m_pos)
 	, m_speed(0.0f)
 	, m_pCamera(NULL)
@@ -20,7 +19,7 @@ Enemy::Enemy(static Model* ModelList)
 	//		g_pModel->Load("Assets/unitychan/unitychan.fbx", 0.01f, false);
 	//
 	//		LoadModel = true;
-	//	}
+	//	}5
 	isTouch = false;
 	m_frame = 0;
 	m_pModel = ModelList;
@@ -116,78 +115,76 @@ void Enemy::Draw()
 	m_pModel->Draw();
 	if (isTouch == true && m_frame < 20)
 	{
-
-		//Effect();
-		
+		Effect();
 		m_frame++;
 	}
 
 	
 }
 
-//void Enemy::Effect()
-//{
-//	// 影の描画
-//	//DirectX::XMFLOAT4X4 mat[3];
-//	DirectX::XMMATRIX T = DirectX::XMMatrixTranslation
-//	(
-//		m_shadowPos.x, m_shadowPos.y, m_shadowPos.z
-//	);
-//	DirectX::XMMATRIX R = DirectX::XMMatrixRotationX
-//	(
-//		DirectX::XMConvertToRadians(90.0f)
-//	);
-//	DirectX::XMStoreFloat4x4(&mat[0], // world行列
-//		DirectX::XMMatrixTranspose(R * T));
-//	mat[1] = m_pCamera->GetViewMatrix();
-//	mat[2] = m_pCamera->GetProjectionMatrix();
-//
-//	Sprite::SetWorld(mat[0]);
-//	Sprite::SetView(mat[1]);
-//	Sprite::SetProjection(mat[2]);
-//
-//	Sprite::SetSize(DirectX::XMFLOAT2(0.3f, 0.3f));
-//	Sprite::SetTexture(m_pShadowTex);
-//
-//	Sprite::Draw();
-//
-//	// バーの表示
-//	// カメラの回転を打ち消す行列(逆行列)を求める
-//	DirectX::XMFLOAT4X4 fInv;
-//	DirectX::XMMATRIX matInv;
-//	fInv = m_pCamera->GetViewMatrix();
-//	matInv = DirectX::XMLoadFloat4x4(&fInv);
-//	// 転置行列から一度元に戻す
-//	matInv = DirectX::XMMatrixTranspose(matInv);
-//	// カメラの回転だけを打ち消したいので、
-//	// カメラの移動成分は0(移動しないよう)にする
-//	// ただし、行列の中身を直接変える場合はFLOAT4x4で
-//	// ないといけないので、MATRIXからFLOAT4x4に変換する
-//	DirectX::XMStoreFloat4x4(&fInv, matInv);
-//	fInv._41 = fInv._42 = fInv._43 = 0.0f;
-//	// 逆行列への返還はMATRIX型で行うのでまた変換...
-//	matInv = DirectX::XMLoadFloat4x4(&fInv);
-//	matInv = DirectX::XMMatrixInverse(nullptr, matInv);
-//
-//	// バーを配置する行列(ワールド)を求める
-//	T = DirectX::XMMatrixTranslation(
-//		m_pos.x, m_pos.y + 1.0f, m_pos.z
-//	);
-//	DirectX::XMStoreFloat4x4(&mat[0],
-//		DirectX::XMMatrixTranspose(matInv * T));
-//	Sprite::SetWorld(mat[0]);
-//	// ViewとProjectionは影を表示する時に設定したので今回は設定しない
-//	Sprite::SetUVPos({ -0.25f, -0.25f }); //スプライトシートを４分割している
-//	Sprite::SetUVScale({ m_uvX, m_uvY }); //スプライトシートの表示する場所
-//	Sprite::SetSize(DirectX::XMFLOAT2(4.0f, 4.0f));
-//	Sprite::SetTexture(m_pEffectTex);
-//
-//	EnableDepth(false);
-//	Sprite::Draw();
-//	EnableDepth(true);
-//
-//
-//}
+void Enemy::Effect()
+{
+	// 影の描画
+	//DirectX::XMFLOAT4X4 mat[3];
+	DirectX::XMMATRIX T = DirectX::XMMatrixTranslation
+	(
+		m_shadowPos.x, m_shadowPos.y, m_shadowPos.z
+	);
+	DirectX::XMMATRIX R = DirectX::XMMatrixRotationX
+	(
+		DirectX::XMConvertToRadians(90.0f)
+	);
+	DirectX::XMStoreFloat4x4(&mat[0], // world行列
+		DirectX::XMMatrixTranspose(R * T));
+	mat[1] = m_pCamera->GetViewMatrix();
+	mat[2] = m_pCamera->GetProjectionMatrix();
+
+	Sprite::SetWorld(mat[0]);
+	Sprite::SetView(mat[1]);
+	Sprite::SetProjection(mat[2]);
+
+	Sprite::SetSize(DirectX::XMFLOAT2(0.3f, 0.3f));
+	Sprite::SetTexture(m_pShadowTex);
+
+	Sprite::Draw();
+
+	// バーの表示
+	// カメラの回転を打ち消す行列(逆行列)を求める
+	DirectX::XMFLOAT4X4 fInv;
+	DirectX::XMMATRIX matInv;
+	fInv = m_pCamera->GetViewMatrix();
+	matInv = DirectX::XMLoadFloat4x4(&fInv);
+	// 転置行列から一度元に戻す
+	matInv = DirectX::XMMatrixTranspose(matInv);
+	// カメラの回転だけを打ち消したいので、
+	// カメラの移動成分は0(移動しないよう)にする
+	// ただし、行列の中身を直接変える場合はFLOAT4x4で
+	// ないといけないので、MATRIXからFLOAT4x4に変換する
+	DirectX::XMStoreFloat4x4(&fInv, matInv);
+	fInv._41 = fInv._42 = fInv._43 = 0.0f;
+	// 逆行列への返還はMATRIX型で行うのでまた変換...
+	matInv = DirectX::XMLoadFloat4x4(&fInv);
+	matInv = DirectX::XMMatrixInverse(nullptr, matInv);
+
+	// バーを配置する行列(ワールド)を求める
+	T = DirectX::XMMatrixTranslation(
+		m_pos.x, m_pos.y + 1.0f, m_pos.z
+	);
+	DirectX::XMStoreFloat4x4(&mat[0],
+		DirectX::XMMatrixTranspose(matInv * T));
+	Sprite::SetWorld(mat[0]);
+	// ViewとProjectionは影を表示する時に設定したので今回は設定しない
+	Sprite::SetUVPos({ -0.25f, -0.25f }); //スプライトシートを４分割している
+	Sprite::SetUVScale({ m_uvX, m_uvY }); //スプライトシートの表示する場所
+	Sprite::SetSize(DirectX::XMFLOAT2(4.0f, 4.0f));
+	Sprite::SetTexture(m_pEffectTex);
+
+	EnableDepth(false);
+	Sprite::Draw();
+	EnableDepth(true);
+
+
+}
 
 void Enemy::Touch()
 {
@@ -225,7 +222,7 @@ void Enemy::Collision(DirectX::XMFLOAT3 pos)
 	vFront = DirectX::XMVector3Normalize(vFront);
 
 	//吹っ飛ぶ初期のスピード
-	m_speed = 0.4f;
+	m_speed = 0.6f;
 	//エネミーが動くからfalseにする
 	m_bEnemy = false;
 }
