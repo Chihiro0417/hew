@@ -3,6 +3,7 @@
 #include <DirectXMath.h>
 #include <DirectXTex/Texture.h>
 #include "Sprite.h"
+#include "Controller.h"
 
 Player::Player(static Model* ModelList)
 	:m_pos(1.0f, 0.5f, 1.0f)
@@ -62,10 +63,10 @@ void Player::Update()
 	DirectX::XMVECTOR vSide = DirectX::XMVector3TransformCoord(vFront, matRotSide);
 
 	DirectX::XMVECTOR vMove = DirectX::XMVectorZero();
-	if (IsKeyPress('W'))	vMove = DirectX::XMVectorAdd(vMove, vFront);
-	if (IsKeyPress('A'))	vMove = DirectX::XMVectorSubtract(vMove, vSide);
-	if (IsKeyPress('S'))	vMove = DirectX::XMVectorSubtract(vMove, vFront);
-	if (IsKeyPress('D'))	vMove = DirectX::XMVectorAdd(vMove, vSide);
+	if (IsKeyPress('W')|| GetLStickUP())	vMove = DirectX::XMVectorAdd(vMove, vFront);
+	if (IsKeyPress('A')|| GetLStickLEFT())	vMove = DirectX::XMVectorSubtract(vMove, vSide);
+	if (IsKeyPress('S')|| GetLStickDOWN())	vMove = DirectX::XMVectorSubtract(vMove, vFront);
+	if (IsKeyPress('D')|| GetLStickRIGHT())	vMove = DirectX::XMVectorAdd(vMove, vSide);
 	vMove = DirectX::XMVectorScale(vMove, 0.1f);
 
 	DirectX::XMFLOAT3 move;

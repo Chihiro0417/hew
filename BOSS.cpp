@@ -1,5 +1,3 @@
-//ボスのcppファイルです
-
 #include "BOSS.h"
 #include "Input.h"
 #include <DirectXMath.h>
@@ -22,12 +20,10 @@ BOSS::BOSS()
 	m_pWVP = new ConstantBuffer();//モデルを表示するために
 	m_pWVP->Create(sizeof(DirectX::XMFLOAT4X4) * 3);
 
-
 }
 
 BOSS::~BOSS()
 {
-
 	delete m_pWVP;
 	delete m_pVS;
 	//delete m_pModel; //ModelListでdelete

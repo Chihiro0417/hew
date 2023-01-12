@@ -19,7 +19,7 @@ public:
 	void SetVector(DirectX::XMVECTOR);
 	void SetPos(float x, float y, float z);
 	float GetCurrentBullet();
-	void Reflect(DirectX::XMVECTOR vector);
+	void Reflect();
 private:
 	DirectX::XMFLOAT3 m_pos;
 	Model* m_pModel;

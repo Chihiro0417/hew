@@ -7,6 +7,7 @@
 #include "Geometory.h"
 #include "Sprite.h"
 #include "Gauge.h"
+#include "Controller.h"
 
 //--- ’è”’è‹`
 const unsigned int SCREEN_WIDTH = 1280;
@@ -45,12 +46,13 @@ void Init()
 
 	Sprite::Init();
 	CGauge::Init();
-
+	InitController();
 	g_pGame = new Game3D();
 }
 void Uninit()
 {
 	delete g_pGame;
+	UninitController();
 	CGauge::Uninit();
 	Sprite::Uninit();
 	UninitGeometory();
@@ -61,6 +63,7 @@ void Uninit()
 void Update(float deltaTime)
 {
 	UpdateInput();
+	UpdateController();
 	g_pGame->Update();
 }
 void Draw()

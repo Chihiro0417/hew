@@ -1,9 +1,5 @@
 #include "BlendState.h"
 
-//‚¤‚ñ‚±
-
-// test
-// test2
 BlendState::BlendState()
 	: m_pState(nullptr)
 {

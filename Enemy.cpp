@@ -13,17 +13,10 @@ Enemy::Enemy(static Model* ModelList)
 	, m_bTouch(false)
 	, m_bEnemy(false)
 {
-	//	if (LoadModel == false)
-	//	{
-	//		g_pModel = new Model();
-	//		g_pModel->Load("Assets/unitychan/unitychan.fbx", 0.01f, false);
-	//
-	//		LoadModel = true;
-	//	}5
+	
 	isTouch = false;
 	m_frame = 0;
 	m_pModel = ModelList;
-
 
 	m_pVS = new VertexShader;
 	if (FAILED(m_pVS->Load("Assets/Shader/ModelVS.cso")))
@@ -45,8 +38,6 @@ Enemy::Enemy(static Model* ModelList)
 
 	m_uvX = 0.25f;
 	m_uvY = 0.25f;
-
-
 
 }
 
@@ -97,7 +88,6 @@ void Enemy::Update()
 			m_uvY = 0.25f;
 		}
 	}
-	m_CurrentCnt++;
 }
 
 void Enemy::Draw()
@@ -119,7 +109,6 @@ void Enemy::Draw()
 		m_frame++;
 	}
 
-	
 }
 
 void Enemy::Effect()
@@ -174,7 +163,7 @@ void Enemy::Effect()
 		DirectX::XMMatrixTranspose(matInv * T));
 	Sprite::SetWorld(mat[0]);
 	// ViewとProjectionは影を表示する時に設定したので今回は設定しない
-	Sprite::SetUVPos({ -0.25f, -0.25f }); //スプライトシートを４分割している
+	//Sprite::SetUVPos({ -0.25f, -0.25f }); //スプライトシートを４分割している
 	Sprite::SetUVScale({ m_uvX, m_uvY }); //スプライトシートの表示する場所
 	Sprite::SetSize(DirectX::XMFLOAT2(4.0f, 4.0f));
 	Sprite::SetTexture(m_pEffectTex);
@@ -222,7 +211,7 @@ void Enemy::Collision(DirectX::XMFLOAT3 pos)
 	vFront = DirectX::XMVector3Normalize(vFront);
 
 	//吹っ飛ぶ初期のスピード
-	m_speed = 0.6f;
+	m_speed = 0.4f;
 	//エネミーが動くからfalseにする
 	m_bEnemy = false;
 }
@@ -273,9 +262,6 @@ bool Enemy::CheckEnemy()
 	return m_bEnemy;
 }
 
-float Enemy::GetCurrent()
-{
-	return m_CurrentCnt;
-}
+
 
 

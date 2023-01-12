@@ -58,9 +58,6 @@ private:
 	BOSS* m_pBOSS;
 	Bullet* m_pBullet;
 
-
-	DirectX::XMFLOAT3 fEnemyPos;
-	float m_MaxCurrent = 0;
 	bool HitPlayer;	// ’e‚ªƒvƒŒƒCƒ„[‚É“–‚½‚Á‚½‚©‚Ç‚¤‚©
 
 	int m_frame = 0;

@@ -27,8 +27,8 @@ public:
 	bool CheckTouch();
 	//エネミーが死んでいるかどうか
 	bool CheckEnemy();
-	//フレーム数の加算
-	float GetCurrent();
+
+
 
 private:
 
@@ -49,8 +49,6 @@ private:
 	float m_uvY;	//スプライトシートのY座標
 	bool isTouch;
 	int m_frame;
-
-	float m_CurrentCnt = 0;
 
 	float m_speed;
 	DirectX::XMVECTOR vFront;

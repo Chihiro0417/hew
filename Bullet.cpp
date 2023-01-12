@@ -3,7 +3,7 @@
 #include <DirectXMath.h>
 
 Bullet::Bullet()
-	: m_pos(5.0f, 2.0f, 1.0f)
+	: m_pos(1.0f, 2.0f, 1.0f)
 	, PlayerPos(m_pos)
 	, m_speed(0.0f)
 	, m_pCamera(NULL)
@@ -33,9 +33,6 @@ void Bullet::Update()
 {
 	m_CurrentCntBullet++;
 
-	vMove = DirectX::XMVectorZero();
-	vMove = DirectX::XMVectorAdd(vMove, vFront);
-	vMove = DirectX::XMVectorScale(vMove, 0.1f);
 
 	DirectX::XMFLOAT3 move;
 	DirectX::XMStoreFloat3(&move, vMove);
@@ -43,6 +40,8 @@ void Bullet::Update()
 	m_pos.x += move.x;
 	m_pos.y += move.y;
 	m_pos.z += move.z;
+
+
 }
 
 void Bullet::Draw()
@@ -112,7 +111,7 @@ DirectX::XMFLOAT3 Bullet::GetVector()
 
 void Bullet::SetVector(DirectX::XMVECTOR vector)
 {
-	vFront = vector;
+	vMove = vector;
 }
 
 float Bullet::GetCurrentBullet()
@@ -120,9 +119,9 @@ float Bullet::GetCurrentBullet()
 	return m_CurrentCntBullet;
 }
 
-void Bullet::Reflect(DirectX::XMVECTOR vector)
+void Bullet::Reflect()
 {
-	vFront = vector;
+	vMove = DirectX::XMVectorScale(vMove, -1);
 }
 
 

@@ -1,5 +1,6 @@
 #include "CameraPlayer.h"
 #include "Input.h"
+#include "Controller.h"
 
 CameraPlayer::CameraPlayer(Player* pPlayer)
 	:m_pPlayer(pPlayer)
@@ -19,11 +20,10 @@ CameraPlayer::~CameraPlayer()
 void CameraPlayer::Update()
 {
 	m_look = m_pPlayer->GetPos();
-	m_look.y += 2.0f;
-	if (IsKeyPress(VK_UP))		m_radY -= 0.05f;
-	if (IsKeyPress(VK_LEFT))	m_radXZ -= 0.05f;
-	if (IsKeyPress(VK_DOWN))	m_radY += 0.05f;
-	if (IsKeyPress(VK_RIGHT))	m_radXZ += 0.05f;
+	if (IsKeyPress(VK_UP)|| GetRStickUP())		m_radY -= 0.05f;
+	if (IsKeyPress(VK_LEFT)||GetRStickLEFT())	m_radXZ -= 0.05f;
+	if (IsKeyPress(VK_DOWN)|| GetRStickDOWN())	m_radY += 0.05f;
+	if (IsKeyPress(VK_RIGHT)|| GetRStickRIGHT())	m_radXZ += 0.05f;
 	if (90 * 3.14 / 180 < m_radY) {
 		m_radY = 90 * 3.14 / 180;
 	}
