@@ -20,7 +20,7 @@ CameraPlayer::~CameraPlayer()
 void CameraPlayer::Update()
 {
 	m_look = m_pPlayer->GetPos();
-	//or‚ÅŠÖ”’Ç‰Á
+	//or‚ÅŠÖ”’Ç‰Á‚µ‚½
 	if (IsKeyPress(VK_UP)|| GetRStickUP())		m_radY -= 0.05f;
 	if (IsKeyPress(VK_LEFT)||GetRStickLEFT())	m_radXZ -= 0.05f;
 	if (IsKeyPress(VK_DOWN)|| GetRStickDOWN())	m_radY += 0.05f;

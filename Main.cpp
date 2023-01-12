@@ -9,7 +9,7 @@
 #include "Gauge.h"
 #include "Controller.h"
 
-//init,update,uninit’Ç‰Á
+//init,update,uninit’Ç‰Á‚µ‚½
 
 //--- ’è”’è‹`
 const unsigned int SCREEN_WIDTH = 1280;

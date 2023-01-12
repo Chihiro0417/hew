@@ -522,7 +522,7 @@ void Game3D::AttackEnemy()
 			DirectX::XMVECTOR inner = DirectX::XMVector3Dot(vFront, vFrontEnemy);
 			DirectX::XMStoreFloat(&angle, inner);
 
-			//ŠÖ”’Ç‰Á
+			//orŠÖ”’Ç‰Á
 			if (IsKeyTrigger(VK_SHIFT)|| GetControllerTrigger(XINPUT_GAMEPAD_B))
 			{
 				if ((m_pPlayer->GetPos().x - m_pEnemy[i]->GetPos().x) * (m_pPlayer->GetPos().x - m_pEnemy[i]->GetPos().x) +
