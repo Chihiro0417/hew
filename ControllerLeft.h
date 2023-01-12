@@ -1,0 +1,59 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//		PlayerHp.h
+//
+//		インクルード情報
+//		・GameUI.h
+//		
+//
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+#ifndef __CONTROLLER_LEFT__
+#define __CONTROLLER_LEFT__
+
+#include <DirectXMath.h>
+#include "DirectX.h"
+#include "ControllerRight.h"
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//		CPlayerHpクラス
+//		
+//		下に呼び出した場所を書いていってください
+//		
+//		クラス呼び出し情報
+//		・GameUI.h/cpp
+//		
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class CControllerLeft
+{
+public:
+	CControllerLeft();
+	~CControllerLeft();
+
+	void Draw();
+	void Update();
+
+private:
+	ID3D11ShaderResourceView* m_pBar;
+
+	DirectX::XMFLOAT3 m_fControllerLeftPos;
+
+	CControllerRight m_pControllerRight;
+
+	int m_nHeal;
+	int m_nFrame;
+	bool m_bInv;
+	int m_nInvTime;
+
+	int m_nUsePause;
+	bool m_bPressKey;
+
+	float m_fGetPosX;
+};
+
+
+#endif // __GAME_UI__

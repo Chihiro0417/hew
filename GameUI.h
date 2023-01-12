@@ -17,7 +17,10 @@
 #include <DirectXMath.h>
 #include "DirectX.h"
 #include "PlayerHp.h"
-#include "PlayerHpSilhouette.h"
+#include "PlayerSp.h"
+#include "ControllerLeft.h"
+#include "ControllerRight.h"
+#include "CreateUI.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -43,7 +46,11 @@ public:
 
 private:
 	CPlayerHp* m_pPlayerHp;
-	CPlayerHpSilhouette* m_pPlayerHpSilhouette;
+	CPlayerSp* m_pPlayerSp;
+	CCreateUI* m_pPlayerHpSilhouette;
+	CCreateUI* m_pBarFrame;
+	CControllerLeft* m_pControllerLeft;
+	CControllerRight* m_pControllerRight;
 };
 
 

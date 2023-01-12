@@ -46,9 +46,8 @@ private:
 
 	int m_nHeal;
 	int m_nFrame;
-	int m_nInvTime;
 	bool m_bInv;
-
+	int m_nInvTime;
 };
 
 
