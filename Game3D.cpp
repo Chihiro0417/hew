@@ -7,11 +7,10 @@ const int LIMIT_POS_FRONT_Z = 15;
 const int LIMIT_POS_BACK_Z = 15;
 
 Enemy* m_pEnemy[MAX_ENEMY];
-bool Hit = false;;
 
 Game3D::Game3D()
 	:HitPlayer(false)
-	,m_MaxCurrent(18000)
+	, m_MaxCurrent(18000)
 {
 	//rand()を完全ランダムにてくれる処理
 	srand((unsigned int)time(nullptr));
@@ -63,15 +62,15 @@ Game3D::Game3D()
 	m_pGameUI = new GameUI();
 	m_pUI = new UI();
 
-	//// プレイヤーを追尾する弾の情報
-	//DirectX::XMFLOAT3 fEnemyPos = m_pBOSS->GetPos();
-	//DirectX::XMVECTOR vEnemyPos = DirectX::XMLoadFloat3(&fEnemyPos);
-	//DirectX::XMFLOAT3 fPlayerPos = m_pPlayer->GetPos();
-	//DirectX::XMVECTOR vPlayerPos = DirectX::XMLoadFloat3(&fPlayerPos);
-	//DirectX::XMVECTOR vSpeed = DirectX::XMVectorScale(DirectX::XMVectorSubtract(vPlayerPos, vEnemyPos), 0.002f);	// 弾の速さ
-	//DirectX::XMFLOAT3 debg;
-	//DirectX::XMStoreFloat3(&debg, vSpeed);
-	//m_pBullet->SetVector(vSpeed);
+	// プレイヤーを追尾する弾の情報
+	DirectX::XMFLOAT3 fEnemyPos = m_pBOSS->GetPos();
+	DirectX::XMVECTOR vEnemyPos = DirectX::XMLoadFloat3(&fEnemyPos);
+	DirectX::XMFLOAT3 fPlayerPos = m_pPlayer->GetPos();
+	DirectX::XMVECTOR vPlayerPos = DirectX::XMLoadFloat3(&fPlayerPos);
+	DirectX::XMVECTOR vSpeed = DirectX::XMVectorScale(DirectX::XMVectorSubtract(vPlayerPos, vEnemyPos), 0.002f);	// 弾の速さ
+	DirectX::XMFLOAT3 debg;
+	DirectX::XMStoreFloat3(&debg, vSpeed);
+	m_pBullet->SetVector(vSpeed);
 }
 Game3D::~Game3D()
 {
@@ -129,7 +128,7 @@ void Game3D::Update()
 			{
 				delete m_pEnemy[i];
 				m_pEnemy[i] = nullptr;
-				
+
 			}
 		}
 		//エネミーが全員死んだら次ウェーブに行く
@@ -148,41 +147,9 @@ void Game3D::Update()
 		}
 	}
 
-	if (!Hit)
-	{
-		DirectX::XMFLOAT3 BulletPos = m_pBullet->GetPos();
-		DirectX::XMVECTOR vBulletPos = DirectX::XMLoadFloat3(&BulletPos);
-		DirectX::XMFLOAT3 PlayerPos = m_pPlayer->GetPos();
-		DirectX::XMVECTOR vPlayerPos = DirectX::XMLoadFloat3(&PlayerPos);
-		DirectX::XMVECTOR vFront = DirectX::XMVectorSubtract(vPlayerPos, vBulletPos);
-
-		//正規化
-		vFront = DirectX::XMVector3Normalize(vFront);
-
-		m_pBullet->SetVector(vFront);
-	}
-
-	if (IsKeyTrigger(VK_RETURN))
-	{
-		Hit = true;
-		if (m_pBOSS)
-		{
-			DirectX::XMFLOAT3 BOSSPos = m_pBOSS->GetPos();
-			DirectX::XMVECTOR vBOSSPos = DirectX::XMLoadFloat3(&BOSSPos);
-			DirectX::XMFLOAT3 BulletPos = m_pBullet->GetPos();
-			DirectX::XMVECTOR vBulletPos = DirectX::XMLoadFloat3(&BulletPos);
-			DirectX::XMVECTOR vFront = DirectX::XMVectorSubtract(vBOSSPos, vBulletPos);
-
-			//正規化
-			vFront = DirectX::XMVector3Normalize(vFront);
-
-			m_pBullet->Reflect(vFront);
-		}
-	}
-
 	// 弾の更新
-	if(m_pBullet) m_pBullet->Update();
-
+	if (m_pBullet)
+		m_pBullet->Update();
 
 	if (IsKeyPress('C'))	// カメラの切り替えはあくまでデバッグなので簡単に切り替えられないようにする
 	{
@@ -213,7 +180,7 @@ void Game3D::Update()
 		m_pBOSS->SetCamera(m_pCamera[m_mainCamera]);
 		m_pBullet->SetCamera(m_pCamera[m_mainCamera]);
 	}
-	
+
 	// 弾とプレイヤーの当たり判定
 	if (m_pBullet != nullptr)
 	{
@@ -222,7 +189,7 @@ void Game3D::Update()
 			(m_pPlayer->GetPos().z - m_pBullet->GetPos().z) * (m_pPlayer->GetPos().z - m_pBullet->GetPos().z)
 			<= (0.5f + 0.5f) * (0.5f + 0.5f))
 		{
-			//m_pBullet->Reflect();
+			m_pBullet->Reflect();
 			HitPlayer = true;
 		}
 	}
@@ -230,18 +197,15 @@ void Game3D::Update()
 	// ボスと弾の当たり判定
 	if (HitPlayer)
 	{
-		if (m_pBOSS)
+		if ((m_pBOSS->GetPos().x - m_pBullet->GetPos().x) * (m_pBOSS->GetPos().x - m_pBullet->GetPos().x) +
+			(m_pBOSS->GetPos().y - m_pBullet->GetPos().y) * (m_pBOSS->GetPos().y - m_pBullet->GetPos().y) +
+			(m_pBOSS->GetPos().z - m_pBullet->GetPos().z) * (m_pBOSS->GetPos().z - m_pBullet->GetPos().z)
+			<= (0.5f + 0.5f) * (0.5f + 0.5f))
 		{
-			if ((m_pBOSS->GetPos().x - m_pBullet->GetPos().x) * (m_pBOSS->GetPos().x - m_pBullet->GetPos().x) +
-				(m_pBOSS->GetPos().y - m_pBullet->GetPos().y) * (m_pBOSS->GetPos().y - m_pBullet->GetPos().y) +
-				(m_pBOSS->GetPos().z - m_pBullet->GetPos().z) * (m_pBOSS->GetPos().z - m_pBullet->GetPos().z)
-				<= (0.5f + 0.5f) * (0.5f + 0.5f))
-			{
-				delete m_pBOSS;
-				m_pBOSS = nullptr;
-				delete m_pBullet;
-				m_pBullet = nullptr;
-			}
+			delete m_pBOSS;
+			m_pBOSS = nullptr;
+			delete m_pBullet;
+			m_pBullet = nullptr;
 		}
 	}
 
@@ -313,6 +277,8 @@ void Game3D::Update()
 			}
 		}
 
+
+
 		// 正面
 		planeN = DirectX::XMFLOAT3(0.0f, 0.0f, -1.0f);
 
@@ -333,7 +299,7 @@ void Game3D::Update()
 		for (int i = 0; i < MAX_ENEMY; i++)
 		{
 			//プレイヤー
-			resultPlayer = Collision::CheckCirclePlane(m_pPlayer->GetPos(), 0.5f, plane, triangle);
+			resultPlayer = Collision::CheckCirclePlane(m_pPlayer->GetPos(), 0.2f, plane, triangle);
 			if (resultPlayer.hit)
 			{
 				m_pPlayer->Landing(resultPlayer.point, plane.normal);
@@ -342,7 +308,7 @@ void Game3D::Update()
 			//エネミー
 			if (m_pEnemy[i] != nullptr)
 			{
-				resultEnemy = Collision::CheckCirclePlane(m_pEnemy[i]->GetPos(), 1.5f, plane, triangle);
+				resultEnemy = Collision::CheckCirclePlane(m_pEnemy[i]->GetPos(), 0.2f, plane, triangle);
 				if (resultEnemy.hit)
 				{
 					DirectX::XMFLOAT3 out = calcReflectVector(m_pEnemy[i]->GetVector(), planeN);
@@ -367,7 +333,7 @@ void Game3D::Update()
 			triangle[1] = { vtx.pos[2],vtx.pos[6],vtx.pos[4] };
 
 
-			resultPlayer = Collision::CheckCirclePlane(m_pPlayer->GetPos(), 0.5f, plane, triangle);
+			resultPlayer = Collision::CheckCirclePlane(m_pPlayer->GetPos(), 0.2f, plane, triangle);
 			if (resultPlayer.hit)
 			{
 				m_pPlayer->Landing(resultPlayer.point, plane.normal);
@@ -376,7 +342,7 @@ void Game3D::Update()
 			if (m_pEnemy[i] != nullptr)
 			{
 
-				resultEnemy = Collision::CheckCirclePlane(m_pEnemy[i]->GetPos(), 1.5f, plane, triangle);
+				resultEnemy = Collision::CheckCirclePlane(m_pEnemy[i]->GetPos(), 0.2f, plane, triangle);
 				if (resultEnemy.hit)
 				{
 					DirectX::XMFLOAT3 out = calcReflectVector(m_pEnemy[i]->GetVector(), planeN);
@@ -399,8 +365,7 @@ void Game3D::Update()
 			triangle[0] = { vtx.pos[3],vtx.pos[1],vtx.pos[7] };
 			triangle[1] = { vtx.pos[1],vtx.pos[5],vtx.pos[7] };
 
-
-			resultPlayer = Collision::CheckCirclePlane(m_pPlayer->GetPos(), 0.5f, plane, triangle);
+			resultPlayer = Collision::CheckCirclePlane(m_pPlayer->GetPos(), 0.2f, plane, triangle);
 			if (resultPlayer.hit)
 			{
 				m_pPlayer->Landing(resultPlayer.point, plane.normal);
@@ -408,13 +373,14 @@ void Game3D::Update()
 
 			if (m_pEnemy[i] != nullptr)
 			{
-				resultEnemy = Collision::CheckCirclePlane(m_pEnemy[i]->GetPos(), 1.5f, plane, triangle);
+				resultEnemy = Collision::CheckCirclePlane(m_pEnemy[i]->GetPos(), 0.2f, plane, triangle);
 				if (resultEnemy.hit)
 				{
 					DirectX::XMFLOAT3 out = calcReflectVector(m_pEnemy[i]->GetVector(), planeN);
 					m_pEnemy[i]->Landing(resultEnemy.point, plane.normal, out);
 				}
 			}
+
 			// 裏面
 			planeN = DirectX::XMFLOAT3(0.0f, 0.0f, 1.0f);
 
@@ -432,7 +398,7 @@ void Game3D::Update()
 			triangle[1] = { vtx.pos[0],vtx.pos[4],vtx.pos[5] };
 
 
-			resultPlayer = Collision::CheckCirclePlane(m_pPlayer->GetPos(), 0.5f, plane, triangle);
+			resultPlayer = Collision::CheckCirclePlane(m_pPlayer->GetPos(), 0.2f, plane, triangle);
 			if (resultPlayer.hit)
 			{
 				m_pPlayer->Landing(resultPlayer.point, plane.normal);
@@ -440,19 +406,92 @@ void Game3D::Update()
 
 			if (m_pEnemy[i] != nullptr)
 			{
-				resultEnemy = Collision::CheckCirclePlane(m_pEnemy[i]->GetPos(), 1.5f, plane, triangle);
+				resultEnemy = Collision::CheckCirclePlane(m_pEnemy[i]->GetPos(), 0.2f, plane, triangle);
 				if (resultEnemy.hit)
 				{
 					DirectX::XMFLOAT3 out = calcReflectVector(m_pEnemy[i]->GetVector(), planeN);
 					m_pEnemy[i]->Landing(resultEnemy.point, plane.normal, out);
 				}
 			}
+
+			// ８点座標
+			Stage::Vertices vtx = m_pStage->GetBlockVertices(i);
+			const DirectX::XMFLOAT3 cosntPlaneN[6] = {
+			DirectX::XMFLOAT3(0, 1, 0),    // +Y
+			DirectX::XMFLOAT3(0,-1, 0),    // -Y
+			DirectX::XMFLOAT3(0, 0, 1),    // +Z
+			DirectX::XMFLOAT3(0, 0,-1),    // -Z
+			DirectX::XMFLOAT3(1, 0, 0),    // +X
+			DirectX::XMFLOAT3(-1, 0, 0)        // -X
+			};
+			DirectX::XMFLOAT3 planeN[6];
+			memcpy(planeN, cosntPlaneN, sizeof(DirectX::XMFLOAT3) * 6);
+
+			DirectX::XMVECTOR vPlaneN[6] =
+			{
+				DirectX::XMLoadFloat3(&(planeN[0])),
+				DirectX::XMLoadFloat3(&(planeN[1])),
+				DirectX::XMLoadFloat3(&(planeN[2])),
+				DirectX::XMLoadFloat3(&(planeN[3])),
+				DirectX::XMLoadFloat3(&(planeN[4])),
+				DirectX::XMLoadFloat3(&(planeN[5])),
+			};
+			const int vtxPosIdx[6] =
+			{
+				0,
+				4,
+				0,
+				6,
+				1,
+				0
+			};
+			for (int j = 0; j < 6; j++)
+			{
+				auto rayStart = m_pCamera[m_mainCamera]->GetLook();
+				auto playerNormal = m_pCamera[m_mainCamera]->GetRay();
+				auto vNormal = DirectX::XMLoadFloat3(&playerNormal);
+				vNormal = DirectX::XMVectorScale(vNormal, -1);
+				DirectX::XMStoreFloat3(&playerNormal, vNormal);
+				Collision::Plane plane = { planeN[j], vtx.pos[vtxPosIdx[j]] };
+				Collision::Ray ray = { rayStart, playerNormal, 5 };
+				Collision::Result result = Collision::CheckRayPlane(ray, plane);
+				if (result.hit == true)
+				{
+					Collision::Triangle triangle[12] = {
+						{vtx.pos[0],vtx.pos[1],vtx.pos[2],},
+						{vtx.pos[1],vtx.pos[3],vtx.pos[2],},
+						{vtx.pos[4],vtx.pos[5],vtx.pos[6],},
+						{vtx.pos[5],vtx.pos[7],vtx.pos[6],},
+						{vtx.pos[1],vtx.pos[0],vtx.pos[5],},
+						{vtx.pos[0],vtx.pos[5],vtx.pos[4],},
+						{vtx.pos[2],vtx.pos[3],vtx.pos[6],},
+						{vtx.pos[3],vtx.pos[7],vtx.pos[6],},
+						{vtx.pos[3],vtx.pos[1],vtx.pos[7],},
+						{vtx.pos[1],vtx.pos[5],vtx.pos[7],},
+						{vtx.pos[0],vtx.pos[2],vtx.pos[4],},
+						{vtx.pos[2],vtx.pos[6],vtx.pos[4],},
+					};
+					DirectX::XMFLOAT3 point = result.point;
+					for (int k = 0; k < 2; k++)
+					{
+						result = Collision::CheckPointTriangle(point, triangle[j * 2 + k]);
+						if (result.hit)
+						{
+							m_pCamera[m_mainCamera]->Landing(result.point);
+						}
+					}
+				}
+			}
+
 		}
+
 	}
 
-	if (Hit)
+	if (IsKeyTrigger(VK_RETURN))
 	{
+		m_pBullet->Reflect();
 	}
+
 	//エネミー追従
 	for (int i = 0; i < MAX_ENEMY; i++)
 	{
@@ -474,7 +513,6 @@ void Game3D::Update()
 void Game3D::Draw()
 {
 	m_pStage->Draw();
-	
 	m_pPlayer->Draw();
 	for (int i = 0; i < MAX_ENEMY; i++)
 	{
@@ -483,11 +521,10 @@ void Game3D::Draw()
 			m_pEnemy[i]->Draw();
 		}
 	}
-
-	if(m_pBOSS)
-	m_pBOSS->Draw();
-	if(m_pBullet)
-	m_pBullet->Draw();
+	if (m_pBOSS)
+		m_pBOSS->Draw();
+	if (m_pBullet)
+		m_pBullet->Draw();
 
 	SetGeometoryVPMatrix(m_pCamera[m_mainCamera]->GetViewMatrix(), m_pCamera[m_mainCamera]->GetProjectionMatrix());
 
@@ -595,7 +632,7 @@ void Game3D::CollisionEnemy()
 {
 	for (int i = 0; i < MAX_ENEMY; i++)
 	{
-		if(m_pEnemy[i] != nullptr)
+		if (m_pEnemy[i] != nullptr)
 		{
 			if ((m_pPlayer->GetPos().x - m_pEnemy[i]->GetPos().x) * (m_pPlayer->GetPos().x - m_pEnemy[i]->GetPos().x) +
 				(m_pPlayer->GetPos().y - m_pEnemy[i]->GetPos().y) * (m_pPlayer->GetPos().y - m_pEnemy[i]->GetPos().y) +
