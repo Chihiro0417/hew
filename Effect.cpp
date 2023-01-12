@@ -2,7 +2,7 @@
 #include "Effect.h"
 #include "DirectX.h"
 #include "Input.h"
-
+//a
 EffectManager::EffectManager()
 :efkPos(0.0f,0.0f,0.0f)
 {

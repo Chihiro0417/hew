@@ -2,7 +2,7 @@
 #include <Effekseer.h>
 #include <EffekseerRendererDX11.h> 
 #include "Game3D.h"
-
+//a
 class EffectManager
 {
 public:

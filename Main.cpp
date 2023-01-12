@@ -7,12 +7,7 @@
 #include "Geometory.h"
 #include "Sprite.h"
 #include "Gauge.h"
-<<<<<<< HEAD
-#include "Sound.h"
-
-=======
 #include "Effect.h"
->>>>>>> work
 //--- íËêîíËã`
 const unsigned int SCREEN_WIDTH = 1280;
 const unsigned int SCREEN_HEIGHT = 720;
@@ -48,10 +43,6 @@ void Init()
 	{
 		Error("geometory initialize failed.");
 	}
-	if (FAILED(InitSound()))
-	{
-		Error("sound initialize failed.");
-	}
 
 	Sprite::Init();
 	CGauge::Init();
@@ -65,7 +56,6 @@ void Uninit()
 	delete g_pGame;
 	CGauge::Uninit();
 	Sprite::Uninit();
-	UninitSound();
 	UninitGeometory();
 	UninitInput();
 	UninitTexture();

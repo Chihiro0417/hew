@@ -1,5 +1,6 @@
 #ifndef __MAIN_H__
 #define __MAIN_H__
+//a
 
 //--- プロトタイプ宣言
 unsigned int GetAppWidth();
