@@ -7,13 +7,14 @@
 #include "Geometory.h"
 #include "Sprite.h"
 #include "Gauge.h"
-
+#include "Effect.h"
 //--- 定数定義
 const unsigned int SCREEN_WIDTH = 1280;
 const unsigned int SCREEN_HEIGHT = 720;
 
 //-- グローバル変数
 Game3D* g_pGame;
+EffectManager* g_pEffect;
 
 unsigned int GetAppWidth()
 {
@@ -47,9 +48,11 @@ void Init()
 	CGauge::Init();
 
 	g_pGame = new Game3D();
+	g_pEffect = new EffectManager();
 }
 void Uninit()
 {
+	delete g_pEffect;
 	delete g_pGame;
 	CGauge::Uninit();
 	Sprite::Uninit();
@@ -62,10 +65,13 @@ void Update(float deltaTime)
 {
 	UpdateInput();
 	g_pGame->Update();
+	g_pEffect->Update();
 }
 void Draw()
 {
 	BeginDrawDX();
 	g_pGame->Draw();
+	g_pEffect->Draw();
+
 	EndDrawDX();
 }
