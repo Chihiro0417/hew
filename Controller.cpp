@@ -1,3 +1,5 @@
+//コントローラーcpp
+
 #include "Controller.h"
 
 XINPUT_STATE g_PadState;

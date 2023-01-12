@@ -63,6 +63,7 @@ void Player::Update()
 	DirectX::XMVECTOR vSide = DirectX::XMVector3TransformCoord(vFront, matRotSide);
 
 	DirectX::XMVECTOR vMove = DirectX::XMVectorZero();
+	//orä÷êîí«â¡
 	if (IsKeyPress('W')|| GetLStickUP())	vMove = DirectX::XMVectorAdd(vMove, vFront);
 	if (IsKeyPress('A')|| GetLStickLEFT())	vMove = DirectX::XMVectorSubtract(vMove, vSide);
 	if (IsKeyPress('S')|| GetLStickDOWN())	vMove = DirectX::XMVectorSubtract(vMove, vFront);

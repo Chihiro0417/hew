@@ -9,6 +9,8 @@
 #include "Gauge.h"
 #include "Controller.h"
 
+//init,update,uninit’Ç‰Á
+
 //--- ’è”’è‹`
 const unsigned int SCREEN_WIDTH = 1280;
 const unsigned int SCREEN_HEIGHT = 720;
@@ -46,7 +48,7 @@ void Init()
 
 	Sprite::Init();
 	CGauge::Init();
-	InitController();
+	InitController();	
 	g_pGame = new Game3D();
 }
 void Uninit()
